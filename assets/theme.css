@@ -5,7 +5,7 @@ body::-webkit-scrollbar {
 
 :root {
   --background: #ffffff;
-  --foreground: #474747;
+  --foreground: #1F1F1F;
   --foreground-active: #0C56D0;
   --border-accent: #d3e3fd;
   --background-accent: #edf2fa;
@@ -13,8 +13,10 @@ body::-webkit-scrollbar {
   --soft-text-neutral: #8F8F8F;
   --tag-text: #8E004B;
   --attr-text: #9F4312;
+  --comment-text: #146C2E;
   --string-text: #0842A0;
-  --hover-bg: #F2F2F2;
+  --pseudo-text: #0B57D0;
+  --hover-bg: #F1F1F1;
 	--focus-bg: #D3E3FD;
 
   --font-ui: 'Roboto', Helvetica, Arial, sans-serif;

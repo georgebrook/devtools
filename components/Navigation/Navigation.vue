@@ -33,7 +33,6 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Button from '@/components/Button/Button.vue';
 import { bem } from '@/utils/bem';
-import { fetchNav } from '@/lib/api';
 
 const emit = defineEmits(['update:activeIndex', 'update:navItems']);
 
@@ -88,7 +87,9 @@ const setActiveTab = (index) => {
 };
 
 const fetchData = async () => {
-  const result = await fetchNav(props.navName);
+  const result = await $fetch(`/api/fetch-nav`, {
+    query: { type: props.navName },
+  });
   navItems.value = result;
   emit('update:navItems', result);
 };

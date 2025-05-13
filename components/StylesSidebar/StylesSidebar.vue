@@ -7,7 +7,10 @@
         <div class="tab-content">
             <div v-for="(item, index) in stylesNav" :key="item.label"
                 :class="['tab-content__section', { 'is-active': activeTabIndex === index }]">
-                <p>Content for {{ item.label }}</p>
+                <p>
+                    element.style {
+                    }
+                </p>
             </div>
         </div>
     </aside>
@@ -74,7 +77,6 @@ onBeforeUnmount(() => {
     min-width: 200px;
     max-width: 100%;
     position: relative;
-    height: 100%;
     overflow: auto;
     border-left: 1px solid var(--border-accent);
 }

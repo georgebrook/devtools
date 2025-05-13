@@ -63,37 +63,6 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
-.console {
-  font-family: monospace;
-  padding: 1rem;
-  border-radius: 8px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.console__output {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 0.5rem;
-}
-
-.console__line {
-  padding: 2px 0;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.console__input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  font-size: 1rem;
-  outline: none;
-  border-bottom: 1px solid #555;
-  padding: 2px;
-}
+<style scoped lang="scss">
+// TODO:
 </style>

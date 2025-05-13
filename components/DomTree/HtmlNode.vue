@@ -1,61 +1,58 @@
 <template>
-  <div class="code" :style="node.tag !== 'html' ? { paddingLeft: '14px' } : { paddingLeft: '20px' }">
-    <div @click="highlight(tagLineId)" :class="bem({
-      block: 'code',
-      element: 'line',
-      modifiers: [
-        ...(node.noEndTag ? ['no-icon'] : []),
-        ...(isSelected(tagLineId).value ? ['highlight'] : []),
-      ],
-    })">
-      <!-- Only show the toggle icon if the node is not 'html' -->
-      <Icon v-if="hasChildren && node.tag !== 'html'" @click="toggle" class="code__toggle-icon" :size="25"
-        :name="expanded ? 'arrow-down-solid' : 'arrow-right-solid'" />
+  <span v-if="depth === 0" class="dom-tree__type code__line">
+    <span class="code__line-options">
+      <Icon :name="'dots-horizontal'" :size="10" />
+    </span>
+    &lt;!DOCTYPE html&gt;
+  </span>
 
-      <!-- Start tag -->
+  <div class="code">
+    <div @click="highlight(tagLineId)" :class="lineClasses('line', [noIconModifier, selectedModifier(tagLineId)])"
+      :style="{ paddingLeft: `${(depth + 1) * indentSize}px` }">
+      <span class="code__line-options">
+        <Icon :name="'dots-horizontal'" :size="15" />
+      </span>
+      <Icon v-if="showToggle" @click="toggle" class="code__toggle-icon" :size="25" :name="toggleIcon" />
       <span class="token tag">&lt;<span class="token tag-name">{{ node.tag }}</span></span>
-
-      <!-- Attributes -->
       <template v-for="(value, key) in node.attributes" :key="key">
-        <span class="token attr-name">&nbsp;{{ key }}</span>=<span class="token attr-value">"<span
-            class="token string">{{ value }}</span>"</span>
+        <span class="token attr-name">&nbsp;{{ key }}</span>
+        <span class="token attr-value">="<span class="token string">{{ value }}</span>"</span>
       </template>
-
-      <!-- End bracket -->
       <span class="token tag">&gt;</span>
     </div>
 
     <div v-if="expanded" class="code__children">
-      <div v-if="node.content" @click="highlight(contentLineId)" :class="bem({
-        block: 'code',
-        element: 'line',
-        modifiers: [
-          'content',
-          ...(isSelected(contentLineId).value ? ['highlight'] : []),
-        ],
-      })" :style="{ paddingLeft: '30px' }">
-        {{ node.content }}
-      </div>
+      <span v-if="showToggle" class="code__children-reference-line"
+        :style="{ left: `${(depth + 1) * indentSize}px` }"></span>
 
-      <HtmlNode v-for="(child, index) in node.children || []" :key="index" :node="child" :depth="depth + 1" />
+      <template v-for="(child, index) in node.children || []" :key="index">
+        <div v-if="child.content" :class="lineClasses('line', [selectedModifier(contentLineId)])"
+          :style="{ paddingLeft: `${(depth + 1) * indentSize + 28}px` }" @click="highlight(contentLineId)">
+          <span class="code__line-options">
+            <Icon :name="'dots-horizontal'" :size="10" />
+          </span>
+          {{ child.content }}
+        </div>
+        <HtmlNode v-else :node="child" :depth="depth + 1" />
+      </template>
 
-      <div v-if="!node.noEndTag" @click="highlight(endTagLineId)" :class="bem({
-        block: 'code',
-        element: 'line',
-        modifiers: [
-          'end',
-          ...(isSelected(endTagLineId).value ? ['highlight'] : []),
-        ],
-      })" :style="node.tag !== 'html' ? { paddingLeft: '18px' } : {}">
-        <span class="token tag">&lt;/<span class="token tag-name">{{ node.tag }}</span>&gt;</span>
+      <div v-if="!node.noEndTag" @click="highlight(endTagLineId)"
+        :class="lineClasses('line', [selectedModifier(endTagLineId)])" :style="endTagStyle">
+        <span class="code__line-options">
+          <Icon :name="'dots-horizontal'" :size="10" />
+        </span>
+        <span @click="highlight(endTagLineId)"
+          :class="lineClasses('line', [selectedModifier(endTagLineId)], 'token tag')"
+          :style="'padding-left: 20px'">&lt;/<span class="token tag-name">{{
+            node.tag }}</span>&gt;</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
-import { bem } from '@/utils/bem';
+import { ref, inject, computed } from 'vue'
+import { bem } from '@/utils/bem'
 
 const props = defineProps({
   node: Object,
@@ -63,35 +60,57 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-})
+});
 
-// Unique ID for this line — could be the node itself, or some ID if available
-const lineId = Symbol(); // or props.node.id if each node has a unique ID
+const tagLineId = Symbol('tag')
+const contentLineId = Symbol('content')
+const endTagLineId = Symbol('end-tag')
 
-// Get shared highlighted line reference
-const tagLineId = Symbol('tag');
-const contentLineId = Symbol('content');
-const endTagLineId = Symbol('end-tag');
+const highlightedLine = inject('highlightedLine', ref(null))
 
-const highlightedLine = inject('highlightedLine', ref(null));
-const isSelected = (id) => computed(() => highlightedLine.value === id);
+const isSelected = (id) => computed(() => highlightedLine.value === id)
 const highlight = (id) => {
   if (highlightedLine.value !== id) {
-    highlightedLine.value = id;
-  }
-};
-
-const expanded = ref(true);
-const toggle = () => {
-  if (hasChildren && props.node.tag !== 'html') {
-    expanded.value = !expanded.value;
+    highlightedLine.value = id
   }
 }
 
-const hasChildren = props.node.children?.length > 0 || props.node.content;
+const expanded = ref(true)
+const toggle = () => {
+  if (hasChildren && props.node.tag !== 'html') {
+    expanded.value = !expanded.value
+  }
+}
+
+const hasChildren = props.node.children?.length > 0 || props.node.content
+
+const showToggle = computed(() => hasChildren && props.node.tag !== 'html');
+
+const indentSize = 17;
+const iconWidth = computed(() => (showToggle.value ? 5 : 20));
+const toggleIcon = computed(() => (expanded.value ? 'arrow-down-solid' : 'arrow-right-solid'));
+const endTagStyle = computed(() => (props.node.tag !== 'html' ? { paddingLeft: `${(props.depth + 1) * indentSize - iconWidth.value}px` } : {}));
+
+const lineClasses = (element, modifiers = [], extra) =>
+  bem({
+    block: 'code',
+    element,
+    modifiers,
+    extra,
+  });
+
+const selectedModifier = (id) => (isSelected(id).value ? 'highlight' : null)
+const noIconModifier = props.node.noEndTag ? 'no-icon' : ''
 </script>
 
 <style scoped lang="scss">
+.code__line-options {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 3px;
+}
+
 .code__line,
 .code__content {
   display: inline-block;
@@ -111,15 +130,35 @@ const hasChildren = props.node.children?.length > 0 || props.node.content;
     z-index: -1;
   }
 
-
   &:hover {
+    +.code__children {
+      .code__children-reference-line {
+        background-color: var(--hover-bg);
+      }
+    }
+
     &::before {
       background-color: var(--hover-bg);
     }
   }
 }
 
+.dom-tree__type {
+  color: var(--soft-text-neutral);
+  padding-left: 20px;
+}
+
 .code__line--highlight {
+  .code__line-options {
+    display: block;
+  }
+
+  +.code__children {
+    .code__children-reference-line {
+      background-color: var(--focus-bg);
+    }
+  }
+
   &::after {
     background-color: var(--focus-bg);
   }
@@ -128,7 +167,27 @@ const hasChildren = props.node.children?.length > 0 || props.node.content;
     &::before {
       background-color: transparent;
     }
+
+    +.code__children {
+      .code__children-reference-line {
+        background-color: var(--focus-bg);
+      }
+    }
   }
+}
+
+.code__children {
+  position: relative;
+}
+
+.code__children-reference-line {
+  content: '';
+  position: absolute;
+  width: 1px;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 10;
 }
 
 .code__line--no-icon {
@@ -137,6 +196,6 @@ const hasChildren = props.node.children?.length > 0 || props.node.content;
 
 .code__toggle-icon {
   display: inline;
-  margin: -5px -5px -7px -4px;
+  margin: -4px -5px -7px -5px;
 }
 </style>

@@ -228,10 +228,15 @@ video {
     display: none;
 }
 
+html {
+    height: fit-content;
+}
+
 #__nuxt,
 .page {
     height: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 .sr-only {
