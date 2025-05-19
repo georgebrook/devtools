@@ -111,8 +111,7 @@ const noIconModifier = props.node.noEndTag ? 'no-icon' : ''
   top: 3px;
 }
 
-.code__line,
-.code__content {
+.code__line {
   display: inline-block;
   cursor: default;
   position: relative;
@@ -123,16 +122,16 @@ const noIconModifier = props.node.noEndTag ? 'no-icon' : ''
   &::after {
     content: '';
     position: absolute;
-    left: -5000px;
+    left: 0;
     top: 0;
-    width: calc(100% + 10000px);
+    width: 100%;
     height: 100%;
     z-index: -1;
   }
 
   &:hover {
     +.code__children {
-      .code__children-reference-line {
+      > .code__children-reference-line {
         background-color: var(--hover-bg);
       }
     }
@@ -154,7 +153,7 @@ const noIconModifier = props.node.noEndTag ? 'no-icon' : ''
   }
 
   +.code__children {
-    .code__children-reference-line {
+    > .code__children-reference-line {
       background-color: var(--focus-bg);
     }
   }

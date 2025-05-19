@@ -1,6 +1,6 @@
 <template>
-  <div :class="bem({ block: 'page', modifiers: ['index'] })">
-    index
+  <div :class="bem({ block: 'page', modifiers: ['memory'] })">
+    Coming Soon...
   </div>
 </template>
 
@@ -9,4 +9,7 @@ import { bem } from '@/utils/bem';
 </script>
 
 <style scoped lang="scss">
+.page {
+  padding: 20px;
+}
 </style>

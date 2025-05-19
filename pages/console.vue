@@ -1,5 +1,5 @@
 <template>
-  <div :class="bem({ block: 'page', modifiers: ['sources'] })">
+  <div :class="bem({ block: 'page', modifiers: ['console'] })">
     <Console />
   </div>
 </template>

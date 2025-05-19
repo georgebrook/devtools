@@ -1,24 +1,31 @@
 <template>
     <aside :class="['styles-sidebar', ...modifiers, className]" ref="sidebarRef">
-        <div :class="['styles-sidebar__resize-handle']" @mousedown="startResize" />
+        <div class="styles-sidebar__resize-handle" @mousedown="startResize" />
+
         <Navigation navName="styles" :useUnderline="true" v-model:activeIndex="activeTabIndex"
             @update:navItems="stylesNav = $event" />
 
         <div class="tab-content">
-            <div v-for="(item, index) in stylesNav" :key="item.label"
-                :class="['tab-content__section', { 'is-active': activeTabIndex === index }]">
-                <p>
-                    element.style {
-                    }
-                </p>
-            </div>
+            <component v-if="tabComponents[activeTabIndex]" :is="tabComponents[activeTabIndex]"
+                class="tab-content__section is-active" />
         </div>
     </aside>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import Navigation from '@/components/Navigation/Navigation.vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+
+// Import all your tab components
+import TabAccessibility from '@/components/StylesSidebar/TabContents/TabAccessibility.vue'
+import TabComputed from '@/components/StylesSidebar/TabContents/TabComputed.vue'
+import TabDomBreakPoints from '~/components/StylesSidebar/TabContents/TabDomBreakPoints.vue'
+import TabEventListeners from '@/components/StylesSidebar/TabContents/TabEventListeners.vue'
+import TabLayout from '@/components/StylesSidebar/TabContents/TabLayout.vue'
+import TabProperties from '@/components/StylesSidebar/TabContents/TabProperties.vue'
+import TabStyles from '@/components/StylesSidebar/TabContents/TabStyles.vue'
+import TabTypography from '@/components/StylesSidebar/TabContents/TabTypography.vue'
+
+import Navigation from '@/components/Navigation/Navigation.vue'
 
 const props = defineProps({
     modifiers: {
@@ -29,46 +36,57 @@ const props = defineProps({
         type: String,
         default: '',
     },
-});
+})
 
-const stylesNav = ref([]);
-const activeTabIndex = ref(0);
-const isResizing = ref(false);
-const sidebarRef = ref(null);
+const stylesNav = ref([])
+const activeTabIndex = ref(0)
+
+// Ordered list of components matching Navigation tab index
+const tabComponents = [
+    TabStyles,
+    TabComputed,
+    TabLayout,
+    TabEventListeners,
+    TabTypography,
+    TabDomBreakPoints,
+    TabProperties,
+    TabAccessibility,
+]
+
+const isResizing = ref(false)
+const sidebarRef = ref(null)
 
 const startResize = () => {
-    isResizing.value = true;
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', stopResize);
-};
+    isResizing.value = true
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', stopResize)
+}
 
 const handleMouseMove = (e) => {
-    if (!isResizing.value || !sidebarRef.value) return;
+    if (!isResizing.value || !sidebarRef.value) return
 
-    const newWidth = sidebarRef.value.getBoundingClientRect().right - e.clientX;
-    if (newWidth > 930) {
-        sidebarRef.value.style.width = `${newWidth}px`;
-    } else {
-        sidebarRef.value.style.width = '930px';
-    }
-};
+    const newWidth = sidebarRef.value.getBoundingClientRect().right - e.clientX
+    sidebarRef.value.style.width = `${Math.max(newWidth, 930)}px`
+}
 
 const stopResize = () => {
-    isResizing.value = false;
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', stopResize);
-};
+    isResizing.value = false
+    document.removeEventListener('mousemove', handleMouseMove)
+    document.removeEventListener('mouseup', stopResize)
+}
 
 onMounted(() => {
-    const handle = sidebarRef.value?.querySelector('.styles-sidebar__resize-handle');
-    handle?.addEventListener('mousedown', startResize);
-});
+    sidebarRef.value
+        ?.querySelector('.styles-sidebar__resize-handle')
+        ?.addEventListener('mousedown', startResize)
+})
 
 onBeforeUnmount(() => {
-    const handle = sidebarRef.value?.querySelector('.styles-sidebar__resize-handle');
-    handle?.removeEventListener('mousedown', startResize);
-    stopResize();
-});
+    sidebarRef.value
+        ?.querySelector('.styles-sidebar__resize-handle')
+        ?.removeEventListener('mousedown', startResize)
+    stopResize()
+})
 </script>
 
 <style scoped lang="scss">
@@ -99,10 +117,7 @@ onBeforeUnmount(() => {
 }
 
 .tab-content__section {
-    display: none;
-
-    &.is-active {
-        display: block;
-    }
+    display: block;
+    height: 100%;
 }
 </style>

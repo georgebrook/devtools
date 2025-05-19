@@ -13,6 +13,7 @@ body::-webkit-scrollbar {
   --soft-text-neutral: #8F8F8F;
   --tag-text: #8E004B;
   --attr-text: #9F4312;
+  --style-property-text: #DC362E;
   --comment-text: #146C2E;
   --string-text: #0842A0;
   --pseudo-text: #0B57D0;

@@ -1,0 +1,364 @@
+[
+  {
+    "selector": "element.style"
+  },
+  {
+    "selector": ":root",
+    "styles": {
+      "--bg-color": "#f6f6f6",
+      "--text-color": "#000000",
+      "--link-color": "#006a60",
+      "--link-hover-bg": "#8df3d0",
+      "--link-hover-color": "#000000",
+      "--border-color": "#d9d9d9",
+      "--content-bg": "#ffffff",
+      "--transition-duration": "1s"
+    },
+    "source": "theme.css"
+  },
+  {
+    "selector": "[data-theme=\"dark\"]",
+    "styles": {
+      "--bg-color": "#121212",
+      "--text-color": "#ffffff",
+      "--link-color": "#6aefff",
+      "--link-hover-bg": "#404040",
+      "--link-hover-color": "#ffffff",
+      "--border-color": "#4a4a4a",
+      "--content-bg": "#1b1b1b"
+    },
+    "source": "dark-mode.css"
+  },
+  {
+    "selector": "html, body",
+    "styles": {
+      "line-height": "1.5",
+      "overflow-x": "hidden",
+      "-ms-overflow-style": "none",
+      "scrollbar-width": "none",
+      "transition": "background-color var(--transition-duration) ease-in-out, color var(--transition-duration) ease-in-out"
+    },
+    "source": "base.css"
+  },
+  {
+    "selector": "body",
+    "styles": {
+      "font-family": "\"Roboto\", sans-serif",
+      "font-optical-sizing": "auto",
+      "font-weight": "300",
+      "font-style": "normal",
+      "font-size": "20px",
+      "background-color": "var(--content-bg)",
+      "width": "90%",
+      "margin": "0 auto",
+      "color": "var(--text-color)"
+    },
+    "source": "global.css"
+  },
+  {
+    "selector": "header",
+    "styles": {
+      "display": "flex",
+      "justify-content": "flex-start",
+      "align-items": "center",
+      "gap": "20px",
+      "margin-bottom": "30px"
+    },
+    "source": "layout.css"
+  },
+  {
+    "selector": "header img",
+    "styles": {
+      "width": "100px",
+      "height": "100px",
+      "border-radius": "50%"
+    },
+    "source": "layout.css"
+  },
+  {
+    "selector": ".name",
+    "styles": {
+      "position": "relative",
+      "line-height": "1",
+      "font-size": "22px",
+      "margin": "0",
+      "letter-spacing": "2px",
+      "font-style": "normal",
+      "display": "flex",
+      "flex-direction": "column",
+      "gap": "10px"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": ".name span",
+    "styles": {
+      "display": "inline-block",
+      "margin-bottom": "10px"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": ".name small",
+    "styles": {
+      "display": "flex",
+      "flex-direction": "row",
+      "gap": "6px",
+      "align-items": "center",
+      "font-size": "12px"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": ".name svg",
+    "styles": {
+      "width": "20px",
+      "height": "20px"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": ".content",
+    "styles": {
+      "padding": "30px 0",
+      "background-color": "var(--content-bg)",
+      "transition": "background-color var(--transition-duration) ease-in-out"
+    },
+    "source": "content.css"
+  },
+  {
+    "selector": "h1, h2, h3, h4, h5, h6",
+    "styles": {
+      "font-weight": "400",
+      "font-style": "normal"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": "h3",
+    "styles": {
+      "margin-bottom": "0",
+      "margin-top": "30px",
+      "font-style": "italic"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": "h4",
+    "styles": {
+      "margin": "0"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": "small",
+    "styles": {
+      "font-size": "15px"
+    },
+    "source": "typography.css"
+  },
+  {
+    "selector": "a",
+    "styles": {
+      "position": "relative",
+      "color": "var(--link-color)",
+      "transition": "all var(--transition-duration) ease-in-out"
+    },
+    "source": "links.css"
+  },
+  {
+    "selector": "a:hover",
+    "styles": {
+      "color": "var(--link-hover-color)",
+      "background-color": "var(--link-hover-bg)"
+    },
+    "source": "links.css"
+  },
+  {
+    "selector": "a:focus",
+    "styles": {
+      "color": "#000000",
+      "outline": "none"
+    },
+    "source": "links.css"
+  },
+  {
+    "selector": "a:active",
+    "styles": {
+      "color": "#171717"
+    },
+    "source": "links.css"
+  },
+  {
+    "selector": "a:visited",
+    "styles": {
+      "color": "var(--text-color)"
+    },
+    "source": "links.css"
+  },
+  {
+    "selector": "li",
+    "styles": {
+      "margin-bottom": "7px"
+    },
+    "source": "lists.css"
+  },
+  {
+    "selector": "footer ul",
+    "styles": {
+      "padding": "0"
+    },
+    "source": "footer.css"
+  },
+  {
+    "selector": "footer ul li",
+    "styles": {
+      "display": "inline-block"
+    },
+    "source": "footer.css"
+  },
+  {
+    "selector": "footer a",
+    "styles": {
+      "padding": "10px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center"
+    },
+    "source": "footer.css"
+  },
+  {
+    "selector": ".footer svg",
+    "styles": {
+      "width": "33px",
+      "height": "33px"
+    },
+    "source": "footer.css"
+  },
+  {
+    "selector": ".sr-only",
+    "styles": {
+      "border": "0 !important",
+      "clip": "rect(1px, 1px, 1px, 1px) !important",
+      "-webkit-clip-path": "inset(50%) !important",
+      "clip-path": "inset(50%) !important",
+      "height": "1px !important",
+      "margin": "-1px !important",
+      "overflow": "hidden !important",
+      "padding": "0 !important",
+      "position": "absolute !important",
+      "width": "1px !important",
+      "white-space": "nowrap !important"
+    },
+    "source": "accessibility.css"
+  },
+  {
+    "selector": ".theme-toggle",
+    "styles": {
+      "position": "fixed",
+      "bottom": "20px",
+      "right": "20px",
+      "background": "var(--content-bg)",
+      "color": "var(--text-color)",
+      "border-radius": "50%",
+      "width": "50px",
+      "height": "50px",
+      "cursor": "pointer",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "transition": "all var(--transition-duration) ease-in-out",
+      "z-index": "1000",
+      "border": "1px solid var(--border-color)"
+    },
+    "source": "theme.css"
+  },
+  {
+    "selector": ".theme-toggle:hover",
+    "styles": {
+      "transform": "scale(1.1)"
+    },
+    "source": "theme.css"
+  },
+  {
+    "selector": ".theme-toggle .moon-icon",
+    "styles": {
+      "width": "25px",
+      "height": "25px"
+    },
+    "source": "theme.css"
+  },
+  {
+    "selector": ".theme-toggle .sun-icon",
+    "styles": {
+      "width": "20px",
+      "height": "20px"
+    },
+    "source": "theme.css"
+  },
+  {
+    "selector": ".theme-toggle .moon-icon, .theme-toggle .sun-icon",
+    "styles": {
+      "transition": "opacity var(--transition-duration) ease-in-out"
+    },
+    "source": "theme.css"
+  },
+  {
+    "selector": ".profile-image",
+    "styles": {
+      "transition": "opacity var(--transition-duration) ease-in-out"
+    },
+    "source": "theme.css"
+  },
+  {
+    "selector": "@media (min-width: 1200px) body",
+    "styles": {
+      "width": "1200px",
+      "margin": "0 auto",
+      "background-color": "var(--bg-color)"
+    },
+    "source": "responsive.css"
+  },
+  {
+    "selector": "@media (min-width: 1200px) header",
+    "styles": {
+      "display": "flex",
+      "justify-content": "flex-start",
+      "flex-direction": "row",
+      "gap": "26px",
+      "align-items": "center"
+    },
+    "source": "responsive.css"
+  },
+  {
+    "selector": "@media (min-width: 1200px) header img",
+    "styles": {
+      "width": "150px",
+      "height": "150px"
+    },
+    "source": "responsive.css"
+  },
+  {
+    "selector": "@media (min-width: 1200px) .name",
+    "styles": {
+      "font-size": "45px"
+    },
+    "source": "responsive.css"
+  },
+  {
+    "selector": "@media (min-width: 1200px) .name small",
+    "styles": {
+      "font-size": "18px"
+    },
+    "source": "responsive.css"
+  },
+  {
+    "selector": "@media (min-width: 1200px) .content",
+    "styles": {
+      "padding": "55px 50px",
+      "border-top-width": "0",
+      "border-bottom-width": "0"
+    },
+    "source": "responsive.css"
+  }
+]
