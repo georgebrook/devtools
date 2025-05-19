@@ -96,7 +96,15 @@ onBeforeUnmount(() => {
     max-width: 100%;
     position: relative;
     overflow: auto;
+    margin-top: 35px;
     border-left: 1px solid var(--border-accent);
+
+    .navigation {
+        position: fixed;
+        z-index: 10;
+        width: 100%;
+        top: 35px;
+    }
 }
 
 .styles-sidebar__resize-handle {
@@ -106,14 +114,12 @@ onBeforeUnmount(() => {
     bottom: 0;
     width: 10px;
     cursor: ew-resize;
-    z-index: 10;
+    z-index: 20;
     background-color: transparent;
 }
 
 .tab-content {
     background: var(--background);
-    height: 100%;
-    position: relative;
 }
 
 .tab-content__section {

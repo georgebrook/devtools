@@ -1,127 +1,112 @@
 <template>
-  <div class="box-model">
-    <div
-      class="margin"
-      :class="{ dimmed: hover && hover !== 'margin' }"
-      @mouseover="hover = 'margin'"
-      @mouseleave="hover = ''"
-    >
-      <span class="label top">10</span>
-      <span class="label left">10</span>
-      <span class="label right">10</span>
-      <span class="label bottom">16</span>
-      <div
-        class="border"
-        :class="{ dimmed: hover && hover !== 'border' }"
-        @mouseover="hover = 'border'"
-        @mouseleave="hover = ''"
-      >
-        <span class="label">border</span>
-        <div
-          class="padding"
-          :class="{ dimmed: hover && hover !== 'padding' }"
-          @mouseover="hover = 'padding'"
-          @mouseleave="hover = ''"
-        >
-          <span class="label">padding</span>
-          <div
-            class="content"
-            :class="{ dimmed: hover && hover !== 'content' }"
-            @mouseover="hover = 'content'"
-            @mouseleave="hover = ''"
-          >
-            914×24
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="box-model" @mouseleave="hover = null">
+  <div
+    v-for="section in sections"
+    :key="section.name"
+    :class="[sectionClass(section.name), { dimmed: hover && hover !== section.name }]"
+    @mouseenter="hover = section.name"
+  >
+    <span v-if="section.label" :class="bem({
+    block: 'box-model',
+    element: 'label',
+  })">{{ section.label }}</span>
+    <span v-if="section.name === 'content'">2043×21</span>
   </div>
+</div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-const hover = ref('');
+import { ref } from 'vue'
+import { bem } from '@/utils/bem';
+
+const hover = ref(null)
+
+const block = 'box-model'
+const sections = [
+  { name: 'position', label: 'position' },
+  { name: 'margin', label: 'margin' },
+  { name: 'border', label: 'border' },
+  { name: 'padding', label: 'padding' },
+  { name: 'content' },
+]
+
+function sectionClass(name) {
+  return bem({
+    block: 'box-model',
+    element: name,
+    modifiers: [],
+    extra: 'box-model__section'
+  })
+}
 </script>
 
 <style scoped>
 .box-model {
+  position: relative;
+  width: 500px;
+  height: 300px;
+  margin: 40px auto;
+}
+
+.box-model__label {
+  position: absolute;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font-family: var(--font-ui);
+}
+
+.box-model__section {
+  position: absolute;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
-  font-family: sans-serif;
-  user-select: none;
+  border: dashed 1px black;
 }
 
-/* Section styles */
-.margin {
-  position: relative;
-  background-color: #f8d4a6;
-  padding: 16px;
-  outline: 1px dashed #000;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;
-  color: #000;
-}
-.margin:hover {
-  box-shadow: 0 0 0 2px #d98b00;
+.box-model__position {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background);
 }
 
-.border {
-  position: relative;
-  background-color: #f9e8a6;
-  padding: 10px;
-  outline: 1px solid #000;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;
-  color: #000;
-}
-.border:hover {
-  box-shadow: 0 0 0 2px #e5c000;
+.box-model__margin {
+  top: 30px;
+  left: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 60px);
+  background: var(--box-model-margin);
 }
 
-.padding {
-  position: relative;
-  background-color: #cfe6a4;
-  padding: 12px;
-  outline: 1px dashed #000;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;
-  color: #000;
-}
-.padding:hover {
-  box-shadow: 0 0 0 2px #8aa64b;
+.box-model__border {
+  top: 60px;
+  left: 40px;
+  width: calc(100% - 80px);
+  height: calc(100% - 120px);
+  background: var(--box-model-border);
 }
 
-.content {
-  background-color: #add8e6;
-  text-align: center;
-  padding: 5px;
-  border: 1px solid #333;
-  font-size: 14px;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;
-  color: #000;
-}
-.content:hover {
-  box-shadow: 0 0 0 2px #5090c0;
+.box-model__padding {
+  top: 90px;
+  left: 60px;
+  width: calc(100% - 120px);
+  height: calc(100% - 180px);
+  background: var(--box-model-padding);
 }
 
-/* Label styling */
-.label {
-  position: absolute;
-  font-size: 12px;
-  color: #333;
-}
-.label.top    { top: -16px; left: 50%; transform: translateX(-50%); }
-.label.bottom { bottom: -16px; left: 50%; transform: translateX(-50%); }
-.label.left   { top: 50%; left: -16px; transform: translateY(-50%); }
-.label.right  { top: 50%; right: -16px; transform: translateY(-50%); }
-.label:not(.top):not(.bottom):not(.left):not(.right) {
-  top: 4px;
-  left: 4px;
-  font-weight: bold;
+.box-model__content {
+  top: 120px;
+  left: 80px;
+  width: calc(100% - 160px);
+  height: calc(100% - 240px);
+  background: var(--box-model-content);
+  padding: 10px 20px;
 }
 
-/* Dimmed background for non-hovered sections */
 .dimmed {
-  background-color: #fff !important;
-  color: #000 !important;
+  background: var(--background) !important;
 }
 </style>

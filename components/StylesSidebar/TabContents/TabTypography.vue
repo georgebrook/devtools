@@ -7,5 +7,8 @@
 <style scoped>
 .tab-coming-soon {
   padding: 20px;
+  background: var(--background);
+  z-index: 10;
+  position: relative;
 }
 </style>

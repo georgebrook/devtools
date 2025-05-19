@@ -36,6 +36,11 @@ onMounted(async () => {
   border-bottom: 1px solid var(--border-accent);
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  padding-right: 10px;
 
   .button {
     padding: 0 0.86rem;

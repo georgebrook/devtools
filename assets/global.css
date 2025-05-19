@@ -234,7 +234,7 @@ html {
 
 #__nuxt,
 .page {
-    height: 100%;
+    height: calc(100vh - 35px);
     position: relative;
 }
 

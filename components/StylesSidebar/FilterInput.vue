@@ -37,9 +37,10 @@ watch(() => props.modelValue, val => {
   font-size: 0.96rem;
   font-family: var(--font-ui);
   letter-spacing: 0.01rem;
-  height: 27px;
-  width: 100%;
+  height: 24px;
   display: inline-flex;
+  width: 100%;
+  border: 2px solid transparent;
 
   &::placeholder {
     color: var(--foreground);
@@ -47,7 +48,8 @@ watch(() => props.modelValue, val => {
   }
 
   &:focus {
-    outline: 2px solid var(--foreground-active);
+    outline: none;
+    border: 2px solid var(--foreground-active);
   }
 }
 

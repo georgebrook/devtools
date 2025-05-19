@@ -19,6 +19,10 @@ body::-webkit-scrollbar {
   --pseudo-text: #0B57D0;
   --hover-bg: #F1F1F1;
 	--focus-bg: #D3E3FD;
+  --box-model-margin: #F9CC9D;
+  --box-model-border: #FDDC9A;
+  --box-model-padding: #C3CF8A;
+  --box-model-content: #8CB5C0;
 
   --font-ui: 'Roboto', Helvetica, Arial, sans-serif;
   --font-base: monospace, Helvetica, Arial, sans-serif;
