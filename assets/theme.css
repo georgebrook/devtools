@@ -17,12 +17,19 @@ body::-webkit-scrollbar {
   --comment-text: #146C2E;
   --string-text: #0842A0;
   --pseudo-text: #0B57D0;
-  --hover-bg: #F1F1F1;
-	--focus-bg: #D3E3FD;
+  --node-hover-bg: #F1F1F1;
+  --node-focus-bg: #D3E3FD;
   --box-model-margin: #F9CC9D;
   --box-model-border: #FDDC9A;
   --box-model-padding: #C3CF8A;
   --box-model-content: #8CB5C0;
+  --console-chevron: #1B6EF3;
+  --warn-bg: #FEF6D5;
+  --warn-text: #E96725;
+  --warn-icon: #E96725;
+  --error-bg: #FCEBEB;
+  --error-text: #DC362E;
+  --error-icon: #DC362E;
 
   --font-ui: 'Roboto', Helvetica, Arial, sans-serif;
   --font-base: monospace, Helvetica, Arial, sans-serif;
@@ -31,8 +38,36 @@ body::-webkit-scrollbar {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #282828;
+    --foreground: #C7C7C7;
+    --foreground-active: #A8C7FA;
+    --border-accent: #5E5E5E;
+    --background-accent: #3C3C3C;
+    --background-hover-accent: #4F4F4F;
+    --soft-text-neutral: #8F8F8F;
+    --tag-text: #7CACF8;
+    --attr-text: #A8C7FA;
+    --style-property-text: #5CD5FB;
+    --comment-text: #146C2E;
+    --string-text: #FE8D59;
+    --pseudo-text: #0B57D0;
+    --node-hover-bg: #3C3C3C;
+    --node-focus-bg: #004A77;
+    --box-model-margin: #B08354;
+    --box-model-border: #E4C481;
+    --box-model-padding: #B8C47F;
+    --box-model-content: #88B2BC;
+    --console-chevron: #1B6EF3;
+    --warn-bg: #413C26;
+    --warn-text: #FDF3AA;
+    --warn-icon: #E96725;
+    --error-bg: #4E3534;
+    --error-text: #F9DEDC;
+    --error-icon: #E46962;
+  }
+
+  * {
+    scrollbar-color: #6B6B6B #2D2D2D;
   }
 }
 

@@ -1,56 +1,79 @@
-<!-- FilterInput.vue -->
 <template>
-  <input
-    v-model="inputValue"
-    type="text"
-    placeholder="Filter"
-    class="filter-input"
-    @input="$emit('update:modelValue', inputValue)"
-  />
+  <div class="filter-input-wrapper">
+    <Icon
+      :name="'filter'"
+      :size="18"
+      :class="bem({ block: 'input', element: 'icon' })"
+    />
+    <input
+      v-model="inputValue"
+      type="text"
+      placeholder="Filter"
+      class="filter-input"
+    >
+  </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch } from 'vue';
 
 const props = defineProps({
-  modelValue: String
-})
-const emit = defineEmits(['update:modelValue'])
+  modelValue: {
+    type: String,
+    default: '',
+  },
+});
 
-const inputValue = ref(props.modelValue || '')
+const emit = defineEmits(['update:modelValue']);
+
+const inputValue = ref(props.modelValue || '');
 
 watch(() => props.modelValue, val => {
-  inputValue.value = val
-})
+  inputValue.value = val;
+});
+
+watch(inputValue, val => {
+  emit('update:modelValue', val);
+});
 </script>
 
 <style scoped lang="scss">
-.filter-input {
-  background-image: url('@/assets/icons/filter.svg');
-  margin: 5px 7px;
+.filter-input-wrapper {
+  display: flex;
+  align-items: center;
   background-color: var(--background-accent);
   border-radius: 15px;
-  padding-left: 40px;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  background-position: 14px center;
+  padding: 0 7px;
+  height: 24px;
+  width: 100%;
+  border: 2px solid transparent;
+  margin: 7px;
+
+  &:focus-within {
+    border-color: var(--foreground-active);
+  }
+}
+
+.input__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.filter-input {
+  border: none;
+  background: none;
   font-size: 0.96rem;
   font-family: var(--font-ui);
   letter-spacing: 0.01rem;
-  height: 24px;
-  display: inline-flex;
   width: 100%;
-  border: 2px solid transparent;
+  height: 100%;
+  outline: none;
 
   &::placeholder {
     color: var(--foreground);
     opacity: 1;
   }
-
-  &:focus {
-    outline: none;
-    border: 2px solid var(--foreground-active);
-  }
 }
-
 </style>

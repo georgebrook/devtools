@@ -1,5 +1,5 @@
 <script setup>
 definePageMeta({
-  middleware: () => navigateTo('/elements')
-})
+  middleware: () => navigateTo('/elements'),
+});
 </script>

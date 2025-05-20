@@ -1,18 +1,18 @@
 <template>
   <header :class="bem({ block: 'header', modifiers, extra: className })">
-    <Navigation :navName="'tools'" :modifiers="['icons', 'tools']" />
+    <Navigation :nav-name="'tools'" :modifiers="['icons', 'tools']" />
 
     <Pipe/>
 
     <Navigation
-      :useRouting="true"
-      :useUnderline="true"
-      :navName="'main'"
+      :use-routing="true"
+      :use-underline="true"
+      :nav-name="'main'"
       :modifiers="['main']"
     />
 
     <Pipe />
-    <Navigation :navName="'options'" :modifiers="['icons', 'options']" />
+    <Navigation :nav-name="'options'" :modifiers="['icons', 'options']" />
   </header>
 </template>
 
@@ -21,8 +21,7 @@ import { bem } from '@/utils/bem'; // Adjust path as needed
 import Navigation from '@/components/Navigation/Navigation.vue';
 import Pipe from '@/components/Pipe/Pipe.vue';
 
-// Define props
-const props = defineProps({
+const { modifiers, className } = defineProps({
   modifiers: {
     type: Array,
     default: () => [],

@@ -13,10 +13,10 @@ interface BemOptions {
   extra?: string;
 }
 
-export function bem(
+export const bem = (
   base: BemInput,
-  options: BemOptions = {}
-): string {
+  options: BemOptions = {},
+): string => {
   let block = '';
   let element = '';
   let modifiers: string[] = [];
@@ -37,7 +37,7 @@ export function bem(
 
   baseClass = element ? `${block}__${element}` : block;
 
-  const filteredModifiers = modifiers.filter(Boolean);
+  const filteredModifiers = (Array.isArray(modifiers) ? modifiers : []).filter(Boolean);
 
   const classes = [baseClass];
 
@@ -50,5 +50,5 @@ export function bem(
   }
 
   return classes.join(' ');
-}
+};
 

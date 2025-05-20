@@ -1,30 +1,49 @@
 <template>
-  <nav :class="computedClass" ref="navRef" role="navigation" aria-label="Primary">
+  <nav
+    ref="navRef"
+    :class="computedClass"
+    role="navigation"
+    aria-label="Primary">
     <ul class="navigation__list" role="tablist">
       <template v-for="(item, index) in navItems" :key="index">
         <li v-if="item && item.label" class="navigation__item" role="presentation">
           <template v-if="useRouting">
-            <RouterLink v-if="item.href" :to="item.href" :target="item.target" :class="[
-              'navigation__button',
-              activeIndex === index ? 'navigation__button--active' : ''
-            ]" role="tab" :aria-selected="activeIndex === index">
+            <RouterLink
+              v-if="item.href"
+              :to="item.href"
+              :target="item.target"
+              :class="[
+                'navigation__button',
+                activeIndex === index ? 'navigation__button--active' : ''
+              ]"
+              role="tab"
+              :aria-selected="activeIndex === index">
               {{ item.label }}
             </RouterLink>
           </template>
 
           <template v-else>
-            <Button :class="[
-              'navigation__button',
-              activeIndex === index ? 'navigation__button--active' : ''
-            ]" :icon="item.iconName" :iconPosition="item.iconName ? 'only' : null" :iconSize="item.iconSize"
-              :text="item.label" role="tab" :aria-selected="activeIndex === index" @click="setActiveTab(index)" />
+            <Button
+              :class="[
+                'navigation__button',
+                activeIndex === index ? 'navigation__button--active' : ''
+              ]"
+              :icon="item.iconName"
+              :icon-position="item.iconName ? 'only' : null"
+              :icon-size="item.iconSize"
+              :text="item.label"
+              role="tab"
+              :aria-selected="activeIndex === index"
+              @click="setActiveTab(index)" />
           </template>
         </li>
       </template>
     </ul>
 
-    <div v-if="activeIndex !== null && useUnderline" class="navigation__underline"
-      :style="{ left: `${underlineStyleRef.left}px`, width: `${underlineStyleRef.width}px` }"></div>
+    <div
+      v-if="activeIndex !== null && useUnderline"
+      class="navigation__underline"
+      :style="{ left: `${underlineStyleRef.left}px`, width: `${underlineStyleRef.width}px` }"/>
   </nav>
 </template>
 
@@ -38,7 +57,7 @@ const emit = defineEmits(['update:activeIndex', 'update:navItems']);
 
 const props = defineProps({
   navName: { type: String, required: true },
-  modifiers: { type: Array, default: [] },
+  modifiers: { type: Array, default: () => [] },
   className: { type: String, default: '' },
   useUnderline: { type: Boolean, default: false },
   useRouting: { type: Boolean, default: false },
@@ -49,7 +68,7 @@ const computedClass = computed(() =>
     block: 'navigation',
     modifiers: props.modifiers,
     extra: props.className,
-  })
+  }),
 );
 
 const activeIndex = ref(null);
@@ -86,8 +105,8 @@ const setActiveTab = (index) => {
   updateUnderline();
 };
 
-const fetchData = async () => {
-  const result = await $fetch(`/api/fetch-nav`, {
+const fetchData = async() => {
+  const result = await $fetch('/api/fetch-nav', {
     query: { type: props.navName },
   });
   navItems.value = result;
@@ -102,7 +121,7 @@ const initResizeObserver = () => {
   }
 };
 
-onMounted(async () => {
+onMounted(async() => {
   await fetchData();
   if (props.useRouting) {
     updateActiveIndexFromRoute();
@@ -152,7 +171,7 @@ if (props.useRouting) {
   font-size: 0.96rem;
   font-family: var(--font-ui);
   letter-spacing: 0.01rem;
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   height: 100%;
@@ -182,7 +201,6 @@ if (props.useRouting) {
   }
 
   .navigation__button {
-    cursor: default;
     width: 33px;
     padding: 0;
     border-radius: 50%;

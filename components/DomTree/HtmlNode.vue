@@ -7,12 +7,19 @@
   </span>
 
   <div class="code">
-    <div @click="highlight(tagLineId)" :class="lineClasses('line', [noIconModifier, selectedModifier(tagLineId)])"
-      :style="{ paddingLeft: `${(depth + 1) * indentSize}px` }">
+    <div
+      :class="lineClasses('line', [noIconModifier, selectedModifier(tagLineId)])"
+      :style="{ paddingLeft: `${(depth + 1) * indentSize}px` }"
+      @click="highlight(tagLineId)">
       <span class="code__line-options">
         <Icon :name="'dots-horizontal'" :size="15" />
       </span>
-      <Icon v-if="showToggle" @click.stop="toggle" class="code__toggle-icon" :size="25" :name="toggleIcon" />
+      <Icon
+        v-if="showToggle"
+        class="code__toggle-icon"
+        :size="25"
+        :name="toggleIcon"
+        @click.stop="toggle" />
       <span class="token tag">
         &lt;<span class="token tag-name">{{ node.tag }}</span>
       </span>
@@ -24,27 +31,41 @@
     </div>
 
     <div v-show="expanded" class="code__children">
-      <span v-if="showToggle" class="code__children-reference-line"
-        :style="{ left: `${(depth + 1) * indentSize}px` }"></span>
+      <span
+        v-if="showToggle"
+        class="code__children-reference-line"
+        :style="{ left: `${(depth + 1) * indentSize}px` }"/>
 
       <template v-for="(child, index) in node.children || []" :key="index">
-        <div v-if="child.content" :class="lineClasses('line', [selectedModifier(contentLineId)])"
-          :style="{ paddingLeft: `${(depth + 1) * indentSize + 28}px` }" @click="highlight(contentLineId)">
+        <div
+          v-if="child.content"
+          :class="lineClasses('line', [selectedModifier(contentLineId)])"
+          :style="{ paddingLeft: `${(depth + 1) * indentSize + 28}px` }"
+          @click="highlight(contentLineId)">
           <span class="code__line-options">
             <Icon :name="'dots-horizontal'" :size="10" />
           </span>
           {{ child.content }}
         </div>
-        <HtmlNode v-else :node="child" :depth="depth + 1" ref="childNodes" />
+        <HtmlNode
+          v-else
+          ref="childNodes"
+          :node="child"
+          :depth="depth + 1" />
       </template>
 
-      <div v-if="!node.noEndTag" @click="highlight(endTagLineId)"
-        :class="lineClasses('line', [selectedModifier(endTagLineId)])" :style="endTagStyle">
+      <div
+        v-if="!node.noEndTag"
+        :class="lineClasses('line', [selectedModifier(endTagLineId)])"
+        :style="endTagStyle"
+        @click="highlight(endTagLineId)">
         <span class="code__line-options">
           <Icon :name="'dots-horizontal'" :size="10" />
         </span>
-        <span @click="highlight(endTagLineId)"
-          :class="lineClasses('line', [selectedModifier(endTagLineId)], 'token tag')" :style="'padding-left: 20px'">
+        <span
+          :class="lineClasses('line', [selectedModifier(endTagLineId)], 'token tag')"
+          :style="'padding-left: 20px'"
+          @click="highlight(endTagLineId)">
           &lt;/<span class="token tag-name">{{ node.tag }}</span>&gt;
         </span>
       </div>
@@ -53,42 +74,43 @@
 </template>
 
 <script setup>
-import { ref, inject, computed, nextTick } from 'vue'
+import { ref, inject, computed, nextTick } from 'vue';
 
 const props = defineProps({
-  node: Object,
+  node: {
+    type: Object,
+    default: () => {},
+  },
   depth: {
     type: Number,
     default: 0,
   },
-})
+});
 
-const tagLineId = Symbol('tag')
-const contentLineId = Symbol('content')
-const endTagLineId = Symbol('end-tag')
+const tagLineId = Symbol('tag');
+const contentLineId = Symbol('content');
+const endTagLineId = Symbol('end-tag');
 
-const highlightedLine = inject('highlightedLine', ref(null))
-const isSelected = (id) => computed(() => highlightedLine.value === id)
+const highlightedLine = inject('highlightedLine', ref(null));
+const isSelected = (id) => computed(() => highlightedLine.value === id);
 const highlight = (id) => {
   if (highlightedLine.value !== id) {
-    highlightedLine.value = id
+    highlightedLine.value = id;
   }
-}
+};
 
 const expanded = ref(true);
 const childNodes = ref([]);
 
-const hasChildren = props.node.children?.length > 0 || props.node.content
-const showToggle = computed(() => hasChildren && props.node.tag !== 'html')
-const indentSize = 13
-const iconWidth = computed(() => (showToggle.value ? 5 : 20))
-const toggleIcon = computed(() => (expanded.value ? 'arrow-down-solid' : 'arrow-right-solid'))
+const hasChildren = props.node.children?.length > 0 || props.node.content;
+const showToggle = computed(() => hasChildren && props.node.tag !== 'html');
+const indentSize = 13;
+const iconWidth = computed(() => (showToggle.value ? 5 : 20));
+const toggleIcon = computed(() => (expanded.value ? 'arrow-down-solid' : 'arrow-right-solid'));
 
-const endTagStyle = computed(() => {
-  return props.node.tag !== 'html'
-    ? { paddingLeft: `${(props.depth + 1) * indentSize - iconWidth.value}px` }
-    : {}
-})
+const endTagStyle = computed(() => props.node.tag !== 'html'
+  ? { paddingLeft: `${(props.depth + 1) * indentSize - iconWidth.value}px` }
+  : {});
 
 const lineClasses = (element, modifiers = [], extra) =>
   bem({
@@ -96,40 +118,34 @@ const lineClasses = (element, modifiers = [], extra) =>
     element,
     modifiers,
     extra,
-  })
+  });
 
-const selectedModifier = (id) => (isSelected(id).value ? 'highlight' : null)
-const noIconModifier = props.node.noEndTag ? 'no-icon' : ''
+const selectedModifier = (id) => (isSelected(id).value ? 'highlight' : null);
+const noIconModifier = props.node.noEndTag ? 'no-icon' : '';
 
-// Recursive function to collapse all descendant nodes
-function collapseAllChildren() {
-  expanded.value = false
-  // Wait until DOM updates so childNodes are accurate refs
+const collapseAllChildren = () => {
+  expanded.value = false;
   nextTick(() => {
     childNodes.value.forEach((childComponent) => {
       if (childComponent && typeof childComponent.collapseAllChildren === 'function') {
-        childComponent.collapseAllChildren()
+        childComponent.collapseAllChildren();
       }
-    })
-  })
-}
+    });
+  });
+};
 
-function toggle() {
+const toggle = () => {
   if (hasChildren && props.node.tag !== 'html') {
     if (expanded.value) {
-      // Currently expanded, collapsing now => collapse all children too
-      collapseAllChildren()
+      collapseAllChildren();
     } else {
-      // Expanding parent - do NOT expand children, so children stay collapsed
-      expanded.value = true
+      expanded.value = true;
     }
   }
-}
+};
 
-// Expose collapseAllChildren so parent nodes can call it
-defineExpose({ collapseAllChildren })
+defineExpose({ collapseAllChildren });
 </script>
-
 
 <style scoped lang="scss">
 .code__line-options {
@@ -157,15 +173,21 @@ defineExpose({ collapseAllChildren })
     z-index: -1;
   }
 
+  &::before {
+    left: 4px;
+    width: calc(100% - 8px);
+    border-radius: 5px;
+  }
+
   &:hover {
     +.code__children {
       >.code__children-reference-line {
-        background-color: var(--hover-bg);
+        background-color: var(--node-hover-bg);
       }
     }
 
     &::before {
-      background-color: var(--hover-bg);
+      background-color: var(--node-hover-bg);
     }
   }
 }
@@ -182,12 +204,12 @@ defineExpose({ collapseAllChildren })
 
   +.code__children {
     >.code__children-reference-line {
-      background-color: var(--focus-bg);
+      background-color: var(--node-focus-bg);
     }
   }
 
   &::after {
-    background-color: var(--focus-bg);
+    background-color: var(--node-focus-bg);
   }
 
   &:hover {
@@ -197,7 +219,7 @@ defineExpose({ collapseAllChildren })
 
     +.code__children {
       >.code__children-reference-line {
-        background-color: var(--focus-bg);
+        background-color: var(--node-focus-bg);
       }
     }
   }

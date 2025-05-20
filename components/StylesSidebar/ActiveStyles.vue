@@ -1,4 +1,3 @@
-<!-- FilteredList.vue -->
 <template>
   <div class="style-list">
     <div
@@ -7,7 +6,7 @@
       class="style-list__section"
     >
       <div class="selector">{{ item.selector }} {</div>
-      <div class="property" v-for="(value, key) in item.styles" :key="key">
+      <div v-for="(value, key) in item.styles" :key="key" class="property">
         <span class="key">{{ key }}:</span>
         <span class="value">{{ value }};</span>
       </div>
@@ -18,29 +17,29 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 const props = defineProps({
   items: {
     type: Array,
-    required: true
+    required: true,
   },
   filter: {
     type: String,
-    default: ''
-  }
-})
+    default: '',
+  },
+});
 
 const filteredItems = computed(() => {
-  const term = props.filter.toLowerCase()
+  const term = props.filter.toLowerCase();
   return props.items.filter(item =>
     item.selector.toLowerCase().includes(term) ||
-    Object.keys(item.styles).some(key =>
+    Object.keys(item.styles || {}).some(key =>
       key.toLowerCase().includes(term) ||
-      item.styles[key].toLowerCase().includes(term)
-    )
-  )
-})
+      (item.styles?.[key] || '').toLowerCase().includes(term),
+    ),
+  );
+});
 </script>
 
 <style scoped lang="scss">
@@ -64,6 +63,10 @@ const filteredItems = computed(() => {
 .property {
   padding-left: 20px;
   line-height: 1.4;
+
+  &:hover {
+    background-color: var(--node-hover-bg);
+  }
 
   .key {
     color: var(--style-property-text);

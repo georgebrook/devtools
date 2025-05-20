@@ -1,3 +1,6 @@
+// @ts-expect-error: vite-plugin-eslint has broken or missing types
+import eslintPlugin from 'vite-plugin-eslint';
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: {
@@ -13,6 +16,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/image',
     '@nuxt/test-utils',
+    '@pinia/nuxt',
   ],
 
   fonts: {
@@ -27,6 +31,15 @@ export default defineNuxtConfig({
   css: [
     '@/assets/global.css',
     '@/assets/theme.css',
-    '@/assets/code.scss'
+    '@/assets/code.scss',
   ],
-})
+
+  vite: {
+    plugins: [eslintPlugin({
+      failOnWarning: false,
+      failOnError: true,
+      emitWarning: true,
+      emitError: true,
+    })],
+  },
+});

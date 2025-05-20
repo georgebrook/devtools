@@ -9,12 +9,12 @@ interface UseResizableOptions {
   minSize?: number;
 }
 
-export function useResizable({
+export const useResizable = ({
   handleSelector,
   targetSelector,
   direction,
   minSize = 200,
-}: UseResizableOptions) {
+}: UseResizableOptions) => {
   useEffect(() => {
     const handle = document.querySelector(handleSelector);
     const target = document.querySelector(targetSelector);
@@ -58,4 +58,4 @@ export function useResizable({
       stopResize();
     };
   }, [handleSelector, targetSelector, direction, minSize]);
-}
+};

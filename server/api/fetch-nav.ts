@@ -1,6 +1,9 @@
 import { readFile } from 'fs/promises';
-import { join } from 'path';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { defineEventHandler, getQuery, createError } from 'h3';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
@@ -13,12 +16,15 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Invalid nav type' });
   }
 
-  const filePath = join(process.cwd(), 'lib', 'mock-data', `${type}-nav.json`);
+  // Path relative to this file
+  const filePath = join(__dirname, '..', '..', 'lib', 'mock-data', `${type}-nav.json`);
 
   try {
+    console.log('Reading nav file:', filePath);
     const data = await readFile(filePath, 'utf-8');
     return JSON.parse(data);
   } catch (err) {
-    throw createError({ statusCode: 500, statusMessage: 'Navigation data not found' });
+    console.error('Failed to read nav file:', err);
+    throw createError({ statusCode: 500, statusMessage: `Navigation data not found` });
   }
 });

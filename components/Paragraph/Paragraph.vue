@@ -10,21 +10,19 @@ import { bem } from '@/utils/bem';
 const props = defineProps({
   modifiers: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   className: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 });
 
-const computedClass = computed(() => {
-  return bem({
-    block: 'paragraph',
-    modifiers: props.modifiers,
-    extra: props.className
-  });
-});
+const computedClass = computed(() => bem({
+  block: 'paragraph',
+  modifiers: props.modifiers,
+  extra: props.className,
+}));
 </script>
 
 <style scoped lang="scss"></style>

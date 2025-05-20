@@ -2,9 +2,21 @@
   <div>
     <div class="tab-content__filters">
       <FilterInput v-model="searchTerm" />
-      <Button :icon="'plus'" :iconPosition="'only'" :iconSize="24" :text="'Add Style'" />
-      <Button :icon="'paint-brush'" :iconPosition="'only'" :iconSize="24" :text="'Add Style'" />
-      <Button :icon="'dock'" :iconPosition="'only'" :iconSize="24" :text="'Add Style'" />
+      <Button
+        :icon="'plus'"
+        :icon-position="'only'"
+        :icon-size="24"
+        :text="'Add Style'" />
+      <Button
+        :icon="'paint-brush'"
+        :icon-position="'only'"
+        :icon-size="24"
+        :text="'Add Style'" />
+      <Button
+        :icon="'dock'"
+        :icon-position="'only'"
+        :icon-size="24"
+        :text="'Add Style'" />
     </div>
     <ActiveStyles :items="styles" :filter="searchTerm" />
     <BoxModel />
@@ -12,23 +24,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import FilterInput from '../FilterInput.vue'
-import BoxModel from '../BoxModel.vue'
-import ActiveStyles from '../ActiveStyles.vue'
+import { ref, onMounted } from 'vue';
+import FilterInput from '../FilterInput.vue';
+import BoxModel from '../BoxModel.vue';
+import ActiveStyles from '../ActiveStyles.vue';
 
-const searchTerm = ref('')
+const searchTerm = ref('');
 const styles = ref([]);
 
-const fetchData = async () => {
-  const result = await $fetch(`/api/fetch-styles`);
+const fetchData = async() => {
+  const result = await $fetch('/api/fetch-styles');
   styles.value = result;
 };
 
-onMounted(async () => {
-  await fetchData()
+onMounted(async() => {
+  await fetchData();
 });
-
 </script>
 
 <style scoped lang="scss">
@@ -38,7 +49,7 @@ onMounted(async () => {
   align-items: center;
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--background);
   z-index: 10;
   padding-right: 10px;
 

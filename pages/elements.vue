@@ -1,8 +1,8 @@
 <template>
-    <div :class="bem({ block: 'page', modifiers: ['elements'] })">
-        <HtmlViewer />
-        <StylesSidebar />
-    </div>
+  <div :class="bem({ block: 'page', modifiers: ['elements'] })">
+    <HtmlViewer />
+    <StylesSidebar />
+  </div>
 </template>
 
 <script setup>
@@ -13,6 +13,6 @@ import HtmlViewer from '@/components/DomTree/HtmlViewer.vue';
 
 <style scoped lang="scss">
 .page--elements {
-    display: flex;
+  display: flex;
 }
 </style>

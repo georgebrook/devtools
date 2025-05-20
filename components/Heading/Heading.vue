@@ -21,15 +21,13 @@ const props = defineProps({
     type: String,
     default: '',
   },
-})
+});
 
-const computedClass = computed(() => {
-  return bem({
-    block: 'headsing',
-    modifiers: [...props.modifiers, `${props.level}`],
-    extra: props.className,
-  })
-})
+const computedClass = computed(() => bem({
+  block: 'headsing',
+  modifiers: [...props.modifiers, `${props.level}`],
+  extra: props.className,
+}));
 </script>
 
 <style scoped lang="scss">
