@@ -1,3 +1,7 @@
+import { defineEventHandler, getQuery, createError } from 'h3';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
+
 export default defineEventHandler(async(event) => {
   const query = getQuery(event);
   const type = query.type;
@@ -10,15 +14,11 @@ export default defineEventHandler(async(event) => {
   }
 
   try {
-    // Fetch the file from the public folder as a URL instead of reading from disk
-    const response = await fetch(`${event.node.req.headers.origin}/mock-data/${type}-nav.json`);
-    if (!response.ok) {
-      throw new Error('Navigation data not found');
-    }
-    const data = await response.json();
-    return data;
+    const filePath = join(process.cwd(), 'public', 'mock-data', `${type}-nav.json`);
+    const fileContent = await readFile(filePath, 'utf-8');
+    return JSON.parse(fileContent);
   } catch (err) {
-    console.log(err);
+    console.error('Failed to read nav JSON:', err);
     throw createError({ statusCode: 500, statusMessage: 'Navigation data not found' });
   }
 });
