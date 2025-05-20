@@ -1,15 +1,15 @@
-import { readFile } from 'fs/promises';
-import { join } from 'path';
 import { defineEventHandler, createError } from 'h3';
 
 export default defineEventHandler(async(event) => {
-  const filePath = join(process.cwd(), 'public', 'mock-data', 'styles.json');
-
   try {
-    const data = await readFile(filePath, 'utf-8');
-    return JSON.parse(data);
+    const response = await fetch(`${event.node.req.headers.origin}/mock-data/styles.json`);
+    if (!response.ok) {
+      throw new Error('Styles data not found');
+    }
+    const data = await response.json();
+    return data;
   } catch (err) {
-    console.error('Failed to read styles.json:', err);
+    console.error('Failed to fetch styles.json:', err);
     throw createError({ statusCode: 500, statusMessage: 'Styles data not found' });
   }
 });
