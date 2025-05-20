@@ -5,7 +5,7 @@
       <NuxtPage />
     </div>
     <div v-else class="desktop-warning">
-      Mobile view for this may well not be developed.
+      Please view this site on a laptop or desktop computer, get off your phone!! 😂.
     </div>
   </div>
 </template>
@@ -36,6 +36,7 @@ onUnmounted(() => {
   align-items: center;
   min-height: 100vh;
   font-size: 1.5rem;
+  padding: 0 20px;
   text-align: center;
 }
 
