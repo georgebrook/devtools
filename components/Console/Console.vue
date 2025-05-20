@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, watch } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import { useConsoleStore } from '@/stores/console';
 import Icon from '@/components/Icon/Icon.vue';
 import { bem } from '@/utils/bem';
@@ -171,6 +171,14 @@ const handleConsoleClick = (e) => {
   inputRef.value?.focus();
 };
 
+const handleKeydownGlobal = (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'l') {
+    e.preventDefault();
+    // eslint-disable-next-line no-console
+    console.clear();
+  }
+};
+
 onMounted(() => {
   consoleStore.loadLogs();
   ['log', 'warn', 'error'].forEach(method => {
@@ -197,6 +205,12 @@ onMounted(() => {
     console.error('This is an error! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.');
     consoleStore.setWelcomeShown();
   }
+
+  window.addEventListener('keydown', handleKeydownGlobal);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydownGlobal);
 });
 
 watch(() => consoleStore.logs, async() => {
