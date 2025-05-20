@@ -24,22 +24,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import FilterInput from '../FilterInput.vue';
 import BoxModel from '../BoxModel.vue';
 import ActiveStyles from '../ActiveStyles.vue';
 
+import stylesData from '@/public/mock-data/styles.json';
+
 const searchTerm = ref('');
-const styles = ref([]);
-
-const fetchData = async() => {
-  const result = await $fetch('/api/fetch-styles');
-  styles.value = result;
-};
-
-onMounted(async() => {
-  await fetchData();
-});
+const styles = ref(stylesData);
 </script>
 
 <style scoped lang="scss">

@@ -48,10 +48,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import Button from '@/components/Button/Button.vue';
 import { bem } from '@/utils/bem';
+
+import mainNav from '@/public/mock-data/main-nav.json';
+import toolsNav from '@/public/mock-data/tools-nav.json';
+import optionsNav from '@/public/mock-data/options-nav.json';
+import stylesNav from '@/public/mock-data/styles-nav.json';
 
 const emit = defineEmits(['update:activeIndex', 'update:navItems']);
 
@@ -76,6 +81,13 @@ const underlineStyleRef = ref({ left: 0, width: 0 });
 const navRef = ref(null);
 const navItems = ref([]);
 const route = useRoute();
+
+const navJsonMap = {
+  main: mainNav,
+  tools: toolsNav,
+  options: optionsNav,
+  styles: stylesNav,
+};
 
 const updateUnderline = () => {
   if (props.useUnderline && navRef.value && activeIndex.value !== null) {
@@ -106,11 +118,9 @@ const setActiveTab = (index) => {
 };
 
 const fetchData = async() => {
-  const result = await $fetch('/api/fetch-nav', {
-    query: { type: props.navName },
-  });
-  navItems.value = result;
-  emit('update:navItems', result);
+  const data = navJsonMap[props.navName] || [];
+  navItems.value = data;
+  emit('update:navItems', data);
 };
 
 let resizeObserver;
@@ -128,9 +138,7 @@ onMounted(async() => {
   } else {
     setActiveTab(0);
   }
-
   updateUnderline();
-
   initResizeObserver();
 });
 
