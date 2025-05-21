@@ -158,6 +158,7 @@ defineExpose({ collapseAllChildren });
 .code__line {
   display: inline-block;
   cursor: default;
+  word-wrap: break-word;
   position: relative;
   width: 100%;
   z-index: 0;

@@ -1,45 +1,15 @@
 <template>
   <div>
-    <div v-if="isDesktop">
-      <Header />
-      <NuxtPage />
-    </div>
-    <div v-else class="desktop-warning">
-      Please view this site on a laptop or desktop computer, get off your phone!! 😂.
-    </div>
+    <Header />
+    <NuxtPage />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
 import Header from '@/components/Header/Header.vue';
-
-const isDesktop = ref(1500);
-
-const checkScreenWidth = () => {
-  isDesktop.value = window.innerWidth > 1500;
-};
-
-onMounted(() => {
-  window.addEventListener('resize', checkScreenWidth);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', checkScreenWidth);
-});
 </script>
 
 <style lang="scss">
-.desktop-warning {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  font-size: 1.5rem;
-  padding: 0 20px;
-  text-align: center;
-}
-
 .page {
   background-color: var(--background);
 }

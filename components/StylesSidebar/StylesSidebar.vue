@@ -2,11 +2,14 @@
   <aside ref="sidebarRef" :class="['styles-sidebar', ...modifiers, className]">
     <div class="styles-sidebar__resize-handle" @mousedown="startResize" />
 
-    <Navigation
-      v-model:active-index="activeTabIndex"
-      nav-name="styles"
-      :use-underline="true"
-      @update:nav-items="stylesNav = $event" />
+    <header :class="bem({ block: 'styles-sidebar', element: 'header' })">
+
+      <Navigation
+        v-model:active-index="activeTabIndex"
+        nav-name="styles"
+        :use-underline="true"
+        @update:nav-items="stylesNav = $event" />
+    </header>
 
     <div class="tab-content">
       <component
@@ -19,6 +22,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { bem } from '@/utils/bem';
 
 import TabAccessibility from '@/components/StylesSidebar/TabContents/TabAccessibility.vue';
 import TabComputed from '@/components/StylesSidebar/TabContents/TabComputed.vue';
@@ -69,7 +73,7 @@ const handleMouseMove = (e) => {
   if (!isResizing.value || !sidebarRef.value) return;
 
   const newWidth = sidebarRef.value.getBoundingClientRect().right - e.clientX;
-  sidebarRef.value.style.width = `${Math.max(newWidth, 930)}px`;
+  sidebarRef.value.style.width = `${Math.max(newWidth, 100)}px`;
 };
 
 const stopResize = () => {
@@ -94,27 +98,38 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .styles-sidebar {
-  width: 930px;
-  min-width: 200px;
+  width: 800px;
   max-width: 100%;
+  min-width: 100px;
   position: relative;
   overflow: auto;
+  overflow-x: hidden;
   margin-top: 35px;
 
-  .navigation {
-    position: fixed;
-    z-index: 10;
-    width: 100%;
-    top: 34px;
+  @media (max-width: 800px) {
+    display: none;
   }
+
+  .navigation__underline {
+    bottom: -18px;
+    display: none;
+  }
+}
+
+.styles-sidebar__header {
+  overflow: auto;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  top: 35px;
 }
 
 .styles-sidebar__resize-handle {
   position: absolute;
-  left: 0;
+  left: -10px;
   top: 0;
   bottom: 0;
-  width: 10px;
+  width: 20px;
   cursor: ew-resize;
   z-index: 20;
   background-color: transparent;

@@ -234,8 +234,9 @@ html {
 
 #__nuxt,
 .page {
-    height: calc(100vh - 35px);
+    height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 .sr-only {

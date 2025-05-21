@@ -8,6 +8,9 @@
       <div class="selector">{{ item.selector }} {</div>
       <div v-for="(value, key) in item.styles" :key="key" class="property">
         <span class="key">{{ key }}:</span>
+        <template v-if="/^#(?:[0-9a-fA-F]{3}){1,2}$/.test(value.trim())">
+          <span class="color-preview" :style="{ backgroundColor: value.trim() }"/>
+        </template>
         <span class="value">{{ value }};</span>
       </div>
       <div class="closing-brace">}</div>
@@ -82,5 +85,15 @@ const filteredItems = computed(() => {
   top: 4px;
   right: 4px;
   text-decoration: underline;
+}
+
+.color-preview {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin: 0 0.5ch;
+  vertical-align: middle;
+  border: 1px solid var(--border-accent);
+  border-radius: 2px;
 }
 </style>

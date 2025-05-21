@@ -13,7 +13,7 @@ export const useResizable = ({
   handleSelector,
   targetSelector,
   direction,
-  minSize = 200,
+  minSize = 100,
 }: UseResizableOptions) => {
   useEffect(() => {
     const handle = document.querySelector(handleSelector);

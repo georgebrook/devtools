@@ -42,9 +42,13 @@ const sectionClass = (name) => bem({
 <style scoped lang="scss">
 .box-model {
   position: relative;
-  width: 500px;
+  width: 80%;
   height: 300px;
   margin: 40px auto;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 }
 
 .box-model__label {

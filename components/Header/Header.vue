@@ -2,14 +2,13 @@
   <header :class="bem({ block: 'header', modifiers, extra: className })">
     <Navigation :nav-name="'tools'" :modifiers="['icons', 'tools']" />
 
-    <Pipe/>
+    <Pipe />
 
     <Navigation
       :use-routing="true"
       :use-underline="true"
       :nav-name="'main'"
-      :modifiers="['main']"
-    />
+      :modifiers="['main']" />
 
     <Pipe />
     <Navigation :nav-name="'options'" :modifiers="['icons', 'options']" />
@@ -36,8 +35,16 @@ const { modifiers, className } = defineProps({
 <style scoped lang="scss">
 .header {
   display: flex;
+  overflow: auto;
   flex-direction: row;
   align-items: center;
   height: 35px;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>

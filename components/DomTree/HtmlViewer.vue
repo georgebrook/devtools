@@ -18,6 +18,7 @@ const { data: htmlData } = await useAsyncData('domTree', () =>
 
 <style scoped>
 .dom-tree {
+  min-width: 400px;
   flex: 1;
   position: relative;
   overflow-y: scroll;
