@@ -196,8 +196,8 @@ onMounted(() => {
   if (!consoleStore.welcomeShown) {
     // eslint-disable-next-line no-console
     console.log(
-      '%cWelcome To The Console%c\n🥝🍏🍐🍈🥒🍊🍎🍓🍉🍍🍇🍒🍋🥭🍑🍌🍈🥝🍓🍍🍊🍒🍎🍇🍌🍉🥭🍑🍋🥒🍏🍊',
-      'font-size: 24px; color: #4CAF50;',
+      '%c🥝🍏🍐🍈🥒🍊🍎🍓🍉🍍🍇🍒🍋🥭🍑🍌🍈🥝🍓🍍🍊🍒🍎🍇🍌🍉🥭🍑🍋🥒🍏🍊',
+      'font-size: 24px;',
     );
     // eslint-disable-next-line no-console
     console.warn('This is a warning. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.');

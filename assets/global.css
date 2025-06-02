@@ -232,7 +232,6 @@ html {
     height: fit-content;
 }
 
-#__nuxt,
 .page {
     height: 100vh;
     position: relative;
