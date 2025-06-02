@@ -77,11 +77,11 @@ const inputRef = ref(null);
 const logIcons = {
   warn: {
     iconName: 'warning',
-    iconSize: 15,
+    iconSize: 17,
   },
   error: {
     iconName: 'error',
-    iconSize: 13,
+    iconSize: 17,
   },
   input: {
     iconName: 'chevron-left',
@@ -195,11 +195,6 @@ onMounted(() => {
 
   if (!consoleStore.welcomeShown) {
     // eslint-disable-next-line no-console
-    console.log(
-      '%c🥝🍏🍐🍈🥒🍊🍎🍓🍉🍍🍇🍒🍋🥭🍑🍌🍈🥝🍓🍍🍊🍒🍎🍇🍌🍉🥭🍑🍋🥒🍏🍊',
-      'font-size: 24px;',
-    );
-    // eslint-disable-next-line no-console
     console.warn('This is a warning. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.');
     // eslint-disable-next-line no-console
     console.error('This is an error! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.');
@@ -246,7 +241,6 @@ watch(() => consoleStore.logs, async() => {
 
 .console__line--warn {
   background-color: var(--warn-bg);
-  color: var(--warn-text);
   
   .icon {
     color: var(--warn-icon);
@@ -255,7 +249,6 @@ watch(() => consoleStore.logs, async() => {
 
 .console__line--error {
   background-color: var(--error-bg);
-  color: var(--error-text);
   
   .icon {
     color: var(--error-icon);
